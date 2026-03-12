@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Fashion Store</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ========== NAVBAR SECTION ========== -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="Fashion Store Logo" class="brand-logo">
+                <span class="brand-name">FASHION STORE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#products-section">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about-section">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+<li class="nav-item"><a class="nav-link" href="auth.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== CART SECTION ========== -->
+    <div class="container cart-section">
+        <h2 class="cart-title">Your Shopping Cart</h2>
+        <div id="cart-items-container"></div>
+        <h3 id="cart-total" class="cart-total"></h3>
+        <div class="checkout-button-wrapper">
+            <a href="checkout.html">
+                <button class="checkout-button" onclick="proceedToCheckout()">Proceed to Checkout</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer">
+        <div class="container text-center">
+            <p class="copyright">&copy; 2026 Ajitabh Fashion Store. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Check login status
+    fetch('/api/check-session')
+        .then(res => res.json())
+        .then(data => {
+            if (data.logged_in) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.href.includes('auth.html')) {
+                        link.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+    function proceedToCheckout() {
+        fetch('/api/check-session')
+            .then(res => res.json())
+            .then(data => {
+                if (data.logged_in) {
+                    window.location.href = 'checkout.html';
+                } else {
+                    alert('Please login first');
+                    window.location.href = 'auth.html';
+                }
+            });
+    }
+</script>
+</body>
+</html>

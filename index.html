@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!--nav-->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+        
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="Fashion Store Logo" class="brand-logo">
+                <span class="brand-name">FASHION STORE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+          
+            <div class="collapse navbar-collapse" id="main-menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#products-section">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about-section">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+                   
+<li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+<li class="nav-item"><a class="nav-link" href="auth.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="promo-banner">
+        <marquee behavior="scroll" direction="left">🔥 Mega Sale | Buy 2 Get 1 Free | Free Shipping Above ₹999 | Limited Period Offer 🔥</marquee>
+    </div>
+
+    <!-- main image-->
+    <section class="hero-slider container">
+        <img id="slider-image" src="images/bgimage1.jpg" alt="Sale Banner">
+    </section>
+
+  
+    <div class="container">
+        <input id="search-products" class="search-input" type="search" placeholder="🔍 Search products...">
+    </div>
+
+    <!--products-->
+    <section id="products-section" class="container section-padding">
+        <h2 class="section-title">Trending Products</h2>
+        <div class="products-grid" id="products-container">
+           
+            <div class="product-item">
+                <div class="product-card">
+                    <img src="images/tshirt1.jpg" class="product-image" alt="Classic Tshirt">
+                    <div class="product-info">
+                        <h5 class="product-name">Classic Tshirt</h5>
+                        <p class="product-price">₹499</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Classic Tshirt" 
+                                data-price="499" 
+                                data-img="images/tshirt1.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+           
+       
+            <div class="product-item">
+                <div class="product-card">
+                    <img src="images/hoodie1.jpg" class="product-image" alt="Hoodie">
+                    <div class="product-info">
+                        <h5 class="product-name">Hoodie</h5>
+                        <p class="product-price">₹999</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Hoodie" 
+                                data-price="999" 
+                                data-img="images/hoodie1.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="product-item">
+                <div class="product-card">
+                    <img src="images/jeans1.jpg" class="product-image" alt="Jeans">
+                    <div class="product-info">
+                        <h5 class="product-name">Jeans</h5>
+                        <p class="product-price">₹1299</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Jeans" 
+                                data-price="1299" 
+                                data-img="images/jeans1.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+       
+            <div class="product-item">
+                <div class="product-card">
+                    <img src="images/jacket1.jpg" class="product-image" alt="Jacket">
+                    <div class="product-info">
+                        <h5 class="product-name">Jacket</h5>
+                        <p class="product-price">₹1999</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Jacket" 
+                                data-price="1999" 
+                                data-img="images/jacket1.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+       
+        
+            <div class="product-item hidden-product">
+                <div class="product-card">
+                    <img src="images/tshirt3.jpg" class="product-image" alt="Premium Tshirt">
+                    <div class="product-info">
+                        <h5 class="product-name">Premium Tshirt</h5>
+                        <p class="product-price">₹2499</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Premium Tshirt" 
+                                data-price="2499" 
+                                data-img="images/tshirt3.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="product-item hidden-product">
+                <div class="product-card">
+                    <img src="images/jeans2.jpg" class="product-image" alt="Premium Jeans">
+                    <div class="product-info">
+                        <h5 class="product-name">Premium Jeans</h5>
+                        <p class="product-price">₹999</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Premium Jeans" 
+                                data-price="999" 
+                                data-img="images/jeans2.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-item hidden-product">
+                <div class="product-card">
+                    <img src="images/shirt1.jpg" class="product-image" alt="Classic Shirt">
+                    <div class="product-info">
+                        <h5 class="product-name">Classic Shirt</h5>
+                        <p class="product-price">₹3599</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Classic Shirt" 
+                                data-price="3599" 
+                                data-img="images/shirt1.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="product-item hidden-product">
+                <div class="product-card">
+                    <img src="images/tshirt4.jpg" class="product-image" alt="Basic Tshirt">
+                    <div class="product-info">
+                        <h5 class="product-name">Basic Tshirt</h5>
+                        <p class="product-price">₹399</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Basic Tshirt" 
+                                data-price="399" 
+                                data-img="images/tshirt4.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-item hidden-product">
+                <div class="product-card">
+                    <img src="images/shirt2.jpg" class="product-image" alt="Formal Shirt">
+                    <div class="product-info">
+                        <h5 class="product-name">Formal Shirt</h5>
+                        <p class="product-price">₹1999</p>
+                        <button class="add-to-cart-btn" 
+                                data-name="Formal Shirt" 
+                                data-price="1999" 
+                                data-img="images/shirt2.jpg">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       
+        <div class="text-center mt-5">
+            <button id="show-more-btn" class="show-more-btn">Show More</button>
+            <button id="show-less-btn" class="show-less-btn">Show Less</button>
+        </div>
+    </section>
+
+    <!-- about -->
+    <section id="about-section" class="container about-section">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img src="images/about.jpg" class="about-image" alt="About Us">
+            </div>
+            <div class="col-md-6">
+                <h3 class="about-title">About Our Store</h3>
+                <p class="about-description">We provide high quality fashion clothing at affordable prices. Our mission is to make everyone look stylish without breaking the bank.</p>
+                <h5 class="contact-title">Contact Us</h5>
+                <p class="contact-detail">📞 +91 98765 43210</p>
+                <p class="contact-detail">📧 ajitabhfashionstore@gmail.com</p>
+                <p class="contact-detail">📍 Mumbai, India</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">YouTube</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    <footer class="site-footer">
+        <div class="container text-center">
+            <p class="copyright">&copy; 2026 Ajitabh Fashion Store. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+  
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Check login status for navbar
+    fetch('/api/check-session')
+        .then(res => res.json())
+        .then(data => {
+            if (data.logged_in) {
+                // Hide login, show profile
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.href.includes('auth.html')) {
+                        link.style.display = 'none';
+                    }
+                    if (link.href.includes('profile.html')) {
+                        link.style.display = 'block';
+                    }
+                });
+            }
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Fashion Store</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="Fashion Store Logo" class="brand-logo">
+                <span class="brand-name">FASHION STORE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#products-section">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about-section">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+ 
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4 id="userName">Loading...</h4>
+                        <p id="userEmail"></p>
+                        <p id="userPhone"></p>
+                        <p id="userAddress"></p>
+                        <button class="btn btn-danger mt-3" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h3>My Orders</h3>
+                <div id="ordersList"></div>
+            </div>
+        </div>
+    </div>
+
+ 
+    <footer class="site-footer">
+        <div class="container text-center">
+            <p class="copyright">&copy; 2026 Fashion Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function loadProfile() {
+            try {
+                const res = await fetch('/api/profile');
+                if (res.status === 401) {
+                    window.location.href = 'auth.html';
+                    return;
+                }
+                
+                const user = await res.json();
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('userPhone').textContent = user.phone;
+                document.getElementById('userAddress').textContent = user.address;
+                
+                const ordersRes = await fetch('/api/orders');
+                const orders = await ordersRes.json();
+                
+                const ordersList = document.getElementById('ordersList');
+                if (orders.length === 0) {
+                    ordersList.innerHTML = '<p>No orders yet.</p>';
+                    return;
+                }
+                
+                let html = '';
+                orders.forEach(order => {
+                    html += `
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5>Order #${order.order_id}</h5>
+                                <p>Date: ${new Date(order.order_date).toLocaleDateString()}</p>
+                                <p>Total: ₹${order.total_amount}</p>
+                                <p>Status: ${order.status}</p>
+                                <ul>
+                                    ${order.items.map(item => `
+                                        <li>${item.name} x ${item.quantity} - ₹${item.price}</li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                });
+                ordersList.innerHTML = html;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function logout() {
+            fetch('/api/logout', { method: 'POST' })
+                .then(() => window.location.href = 'index.html');
+        }
+
+        loadProfile();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

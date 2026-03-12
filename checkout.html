@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Fashion Store</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="Fashion Store Logo" class="brand-logo">
+                <span class="brand-name">FASHION STORE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-menu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#products-section">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about-section">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="auth.html">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container checkout-section">
+        <h2 class="checkout-title">Checkout</h2>
+        
+       
+        <div class="order-summary-card">
+            <h5 class="summary-title">Your Order Summary</h5>
+            <div id="checkout-items-list">
+               
+            </div>
+            <hr class="divider">
+            <div class="total-amount-wrapper">
+                <strong class="total-label">Total Amount:</strong>
+                <strong id="checkout-total" class="total-value">₹0</strong>
+            </div>
+        </div>
+        
+        <!-- Checkout Form -->
+        <form id="order-form" class="checkout-form">
+            <input class="form-input" type="text" placeholder="Full Name *" required>
+            <input class="form-input" type="tel" placeholder="Phone Number *" required>
+            <input class="form-input" type="email" placeholder="Email Address *" required>
+            <textarea class="form-textarea" placeholder="Complete Address *" rows="3" required></textarea>
+            
+            <h5 class="payment-title">Payment Method</h5>
+            <div class="payment-option">
+                <input type="radio" name="payment-method" value="cod" required> Cash On Delivery
+            </div>
+            <div class="payment-option">
+                <input type="radio" name="payment-method" value="phonepe"> PhonePe
+            </div>
+            <div class="payment-option">
+                <input type="radio" name="payment-method" value="gpay"> Google Pay
+            </div>
+            
+            <button type="button" class="confirm-order-btn" onclick="placeOrder()">Confirm Order</button>
+        </form>
+    </div>
+
+
+    <footer class="site-footer">
+        <div class="container text-center">
+            <p class="copyright">&copy; 2026 Fashion Store. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+ <script>
+    // display cart
+    document.addEventListener('DOMContentLoaded', function() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const itemsContainer = document.getElementById('checkout-items-list');
+        const totalElement = document.getElementById('checkout-total');
+        
+        if (!itemsContainer || !totalElement) return;
+        
+        let totalAmount = 0;
+        let itemsHtml = '';
+        
+        cart.forEach(item => {
+            const price = Number(item.price) || 0;
+            const quantity = Number(item.quantity) || 1;
+            const itemTotal = price * quantity;
+            
+            totalAmount += itemTotal;
+            itemsHtml += `
+                <div class="order-item">
+                    <span class="item-name">${item.name} x ${quantity}</span>
+                    <span class="item-price">₹${itemTotal}</span>
+                </div>
+            `;
+        });
+        
+        itemsContainer.innerHTML = itemsHtml || '<p class="empty-cart-message">No items in cart</p>';
+        totalElement.textContent = '₹' + totalAmount;
+        
+        // ✅ YAHI EK BAAR SET KARO (number store ho raha hai)
+        localStorage.setItem("orderTotal", totalAmount);
+    });
+
+    async function placeOrder() {
+        // Get form fields
+        const nameInput = document.querySelector('input[type="text"]');
+        const phoneInput = document.querySelector('input[type="tel"]');
+        const emailInput = document.querySelector('input[type="email"]');
+        const addressInput = document.querySelector('textarea');
+        const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
+        
+        // Validation
+        if (!nameInput?.value || !phoneInput?.value || !emailInput?.value || !addressInput?.value || !selectedPayment) {
+            alert("Please fill all fields and select payment method");
+            return;
+        }
+        
+        if (!emailInput.value.includes('@') || !emailInput.value.includes('.')) {
+            alert("Please enter a valid email");
+            return;
+        }
+        
+        if (phoneInput.value.length < 10 || phoneInput.value.length > 10) {
+            alert("Please enter a valid 10-digit phone number");
+            return;
+        }
+        
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        
+        // ✅ YAHAN SE DIRECT localStorage LO, variable mat banao
+        const total = localStorage.getItem("orderTotal") || "0";
+        
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        // Show loading
+        const confirmBtn = document.querySelector('.confirm-order-btn');
+        const originalText = confirmBtn.textContent;
+        confirmBtn.textContent = 'Placing Order...';
+        confirmBtn.disabled = true;
+
+        try {
+            const customerInfo = {
+                name: nameInput.value,
+                phone: phoneInput.value,
+                email: emailInput.value,
+                address: addressInput.value
+            };
+            localStorage.setItem("customerInfo", JSON.stringify(customerInfo));
+            
+            // Send order to server
+            const response = await fetch('/api/place-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    cart: cart, 
+                    total: total,      // ✅ total as string ya number dono chalega
+                    customer: customerInfo,
+                    payment_method: selectedPayment.value
+                })
+            });
+
+            if (response.status === 401) {
+                alert('Please login to place order');
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            const data = await response.json();
+            
+            if (data.success) {
+                // ✅ ORDER SUCCESS PE JANE SE PEHLE SAB SET HAI
+                window.location.href = 'order-success.html';
+                // Cart clear order-success.html ke beforeunload me hoga
+            } else {
+                alert('Error placing order. Please try again.');
+            }
+        } catch (error) {
+            console.error('Order error:', error);
+            alert('Network error. Please try again.');
+        } finally {
+            confirmBtn.textContent = originalText;
+            confirmBtn.disabled = false;
+        }
+    }
+
+    //attach form submit
+    document.addEventListener('DOMContentLoaded', function() {
+        const orderForm = document.getElementById("order-form");
+        if (orderForm) {
+            orderForm.onsubmit = (e) => {
+                e.preventDefault();
+                placeOrder();
+            };
+        }
+    });
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
